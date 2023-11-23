@@ -1,7 +1,7 @@
-def read_lines(file_path):
+def read_lines(file):
     lines = []
 
-    with open(file_path) as f:
+    with open(file) as f:
         lines = f.readlines()
 
     return lines
@@ -11,14 +11,14 @@ def extract_movements_and_stacks(lines):
     movements_start = False
     stacks = []
 
-    for crates in lines:
-        if not crates.replace(" ", "").strip():
+    for i in lines:
+        if not i.replace(" ", "").strip():
             movements_start = True
             continue
         if not movements_start:
-            stacks.append(crates)
+            stacks.append(i)
         else:
-            movements.append(crates)
+            movements.append(i)
 
     return movements, stacks
 
@@ -55,8 +55,8 @@ def get_final_result(formatted_columns):
     result = "".join([x[-1] if x else '' for x in formatted_columns])
     return result
 
-def process_part_one(file_path):
-    lines = read_lines(file_path)
+def process_part_one(file):
+    lines = read_lines(file)
     movements, stacks = extract_movements_and_stacks(lines)
     columns = [[line[x] for line in stacks] for x in range(len(stacks[0]))]
     formatted_columns = []
@@ -81,8 +81,8 @@ def process_part_one(file_path):
     return result
 
 
-def process_part_two(file_path):
-    lines = read_lines(file_path)
+def process_part_two(file):
+    lines = read_lines(file)
     movements, stacks = extract_movements_and_stacks(lines)
     formatted_columns = format_columns(stacks)
     formatted_columns = perform_movements(formatted_columns, movements, is_part_two=True)
@@ -90,9 +90,9 @@ def process_part_two(file_path):
     return result
 
 
-file_path = "entradas.txt"
+file = "entradas.txt"
 
 
-print("Parte Uno Resultado:", process_part_one(file_path))
+print("Parte Uno Resultado:", process_part_one(file))
 
-#print("Parte Dos Resultado:", process_part_two(file_path))
+#print("Parte Dos Resultado:", process_part_two(file))
